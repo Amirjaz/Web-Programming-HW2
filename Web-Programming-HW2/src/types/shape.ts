@@ -1,7 +1,7 @@
 export type ShapeType = 'square' | 'circle' | 'triangle'
 
 export interface Shape {
-    id: number
+    id: string
     type: ShapeType
     x: number
     y: number
