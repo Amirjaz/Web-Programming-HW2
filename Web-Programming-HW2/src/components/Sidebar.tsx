@@ -9,19 +9,29 @@ const shapeTypes: ShapeType[] = ['square', 'circle', 'triangle']
 
 export default function Sidebar({ selectedShape, onSelectShape }: SidebarProps) {
     return (
-        <aside className="w-48 bg-gray-200 p-4 overflow-y-auto">
-            <h2 className="text-lg font-semibold mb-4">Shapes</h2>
-            <div className="space-y-3">
-                {shapeTypes.map((shape) => (
-                    <div
-                        key={shape}
-                        onClick={() => onSelectShape(shape === selectedShape ? null : shape)}
-                        className={`p-3 rounded cursor-pointer flex items-center justify-center ${selectedShape === shape ? 'bg-blue-500 text-white' : 'bg-white hover:bg-gray-100'}`}
-                    >
-                        <div className={`w-8 h-8 ${getShapeStyle(shape)}`}></div>
-                        <span className="ml-2 capitalize">{shape}</span>
-                    </div>
-                ))}
+        <aside className="w-60 bg-white shadow-md rounded-r-lg p-5 overflow-y-auto h-full">
+            <h2 className="text-xl font-semibold mb-6 text-gray-800">Select Shape</h2>
+            <div className="space-y-4">
+                {shapeTypes.map((shape) => {
+                    const isActive = selectedShape === shape
+                    return (
+                        <div
+                            key={shape}
+                            onClick={() => onSelectShape(isActive ? null : shape)}
+                            className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer transition 
+                                ${isActive ? 'bg-blue-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'}`}
+                        >
+                            {shape === 'triangle' ? (
+                                <div className="flex items-center justify-center w-10 h-10">
+                                    <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[38px] border-l-transparent border-r-transparent border-b-yellow-500" />
+                                </div>
+                            ) : (
+                                <div className={`w-10 h-10 ${getShapeStyle(shape)}`} />
+                            )}
+                            <span className="capitalize font-medium">{shape}</span>
+                        </div>
+                    )
+                })}
             </div>
         </aside>
     )
@@ -34,7 +44,7 @@ function getShapeStyle(shape: ShapeType) {
         case 'circle':
             return 'bg-green-500 rounded-full'
         case 'triangle':
-            return 'w-0 h-0 border-l-8 border-r-8 border-b-16 border-l-transparent border-r-transparent border-b-yellow-500'
+            return ''
         default:
             return ''
     }
